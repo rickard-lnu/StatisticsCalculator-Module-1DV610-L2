@@ -120,6 +120,15 @@ describe('StatisticsCalculator', () => {
     expect(calc.meanAbsolute()).toBe(1.2) // (2 + 1 + 0 + 1 + 2) / 5 = 6/5 = 1.2
   })
 
+  test('should calculate happiness index (fun weird function)', () => {
+    calc.addData([0, 10, 4, -5])
+    // 0 gets 5 points, 10 gets 4 points (1 base + 2 round + 1 small), 
+    // 4 gets 5 points (1 base + 1 small + 3 perfect square), 
+    // -5 gets 0 points (1 base - 1 negative)
+    // Total: 14 points / 4 numbers = 3.5
+    expect(calc.happinessIndex()).toBe(3.5)
+  })
+
   // test empty data
   test('should return null for empty data', () => {
     expect(calc.mean()).toBe(null)
@@ -135,6 +144,7 @@ describe('StatisticsCalculator', () => {
     expect(calc.product()).toBe(null)
     expect(calc.sumOfSquares()).toBe(null)
     expect(calc.meanAbsolute()).toBe(null)
+    expect(calc.happinessIndex()).toBe(null)
   })
 
   test('should return 0 for empty sum', () => {
