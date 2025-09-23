@@ -27,4 +27,22 @@ class StatisticsCalculator {
     this.numbers = []
   }
 
+  // how many numbers do we have
+  count() {
+    return this.numbers.length
+  }
+
+  // add all numbers together
+  sum() {
+    if (this.numbers.length === 0) {
+      return 0
+    }
+    
+    let total = 0
+    for (let i = 0; i < this.numbers.length; i++) {
+      total = total + this.numbers[i]
+    }
+    return total
+  }
+
 }
