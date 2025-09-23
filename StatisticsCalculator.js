@@ -45,4 +45,44 @@ class StatisticsCalculator {
     return total
   }
 
+  // calculate average
+  mean() {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    
+    let sum = this.sum()
+    let average = sum / this.numbers.length
+    return average
+  }
+
+  // find smallest number
+  min() {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    
+    let smallest = this.numbers[0]
+    for (let i = 1; i < this.numbers.length; i++) {
+      if (this.numbers[i] < smallest) {
+        smallest = this.numbers[i]
+      }
+    }
+    return smallest
+  }
+
+  // find biggest number
+  max() {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    
+    let biggest = this.numbers[0]
+    for (let i = 1; i < this.numbers.length; i++) {
+      if (this.numbers[i] > biggest) {
+        biggest = this.numbers[i]
+      }
+    }
+    return biggest
+  }
 }
