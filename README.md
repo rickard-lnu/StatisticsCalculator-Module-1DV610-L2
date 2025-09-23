@@ -91,7 +91,7 @@ console.log('Happiness Index:', calc.happinessIndex())
 
 ## Error Handling
 
-The calculator includes comprehensive error handling:
+The calculator includes error handling:
 
 ```javascript
 // Input validation
