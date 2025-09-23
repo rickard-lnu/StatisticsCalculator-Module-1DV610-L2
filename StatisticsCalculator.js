@@ -205,4 +205,24 @@ class StatisticsCalculator {
     let weight = index - lower
     return sorted[lower] + weight * (sorted[upper] - sorted[lower])
   }
+
+  // some extra functions that might be useful
+  
+  // first quartile (25th percentile)
+  q1() {
+    return this.percentile(25)
+  }
+
+  // third quartile (75th percentile)  
+  q3() {
+    return this.percentile(75)
+  }
+
+  // interquartile range
+  iqr() {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    return this.q3() - this.q1()
+  }
 }
