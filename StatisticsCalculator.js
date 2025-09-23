@@ -85,4 +85,23 @@ class StatisticsCalculator {
     }
     return biggest
   }
+
+  // find the middle number
+  median() {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    
+    let sorted = this.sortData()
+    let middle = Math.floor(sorted.length / 2)
+    
+    // if even number of items, take average of two middle ones
+    if (sorted.length % 2 === 0) {
+      let result = (sorted[middle - 1] + sorted[middle]) / 2
+      return result
+    } else {
+      // odd number, just take the middle one
+      return sorted[middle]
+    }
+  }
 }
