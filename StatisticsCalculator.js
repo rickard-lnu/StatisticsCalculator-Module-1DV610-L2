@@ -291,5 +291,51 @@ class StatisticsCalculator {
     let average = sum / this.numbers.length
     return average
   }
+
+  // happiness index - my own weird function that rates how "nice" the numbers are
+  // gives bonus points for round numbers, sequences, etc (just for fun!)
+  happinessIndex() {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    
+    let totalHappiness = 0
+    for (let i = 0; i < this.numbers.length; i++) {
+      let num = this.numbers[i]
+      let happiness = 1  // base happiness for existing
+      
+      // round numbers are happy
+      if (num % 10 === 0) {
+        happiness = happiness + 2
+      }
+      
+      // small positive numbers are nice
+      if (num >= 1 && num <= 10) {
+        happiness = happiness + 1
+      }
+      
+      // perfect squares get bonus (like 4, 9, 16, 25)
+      let sqrt = Math.sqrt(Math.abs(num))
+      if (sqrt === Math.floor(sqrt)) {
+        happiness = happiness + 3
+      }
+      
+      // zero is perfectly neutral
+      if (num === 0) {
+        happiness = 5
+      }
+      
+      // negative numbers are sad
+      if (num < 0) {
+        happiness = happiness - 1
+      }
+      
+      totalHappiness = totalHappiness + happiness
+    }
+    
+    // return average happiness per number
+    let avgHappiness = totalHappiness / this.numbers.length
+    return avgHappiness
+  }
 }
 module.exports = StatisticsCalculator
