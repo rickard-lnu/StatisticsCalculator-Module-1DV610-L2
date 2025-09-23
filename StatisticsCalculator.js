@@ -104,4 +104,23 @@ class StatisticsCalculator {
       return sorted[middle]
     }
   }
+
+  // calculate variance (spread of data)
+  variance() {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    
+    let avg = this.mean()
+    let sumSquaredDiffs = 0
+    
+    // calculate squared differences from mean
+    for (let i = 0; i < this.numbers.length; i++) {
+      let diff = this.numbers[i] - avg
+      sumSquaredDiffs = sumSquaredDiffs + (diff * diff)
+    }
+    
+    let variance = sumSquaredDiffs / this.numbers.length
+    return variance
+  }
 }
