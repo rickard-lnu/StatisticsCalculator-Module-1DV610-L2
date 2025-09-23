@@ -180,4 +180,29 @@ class StatisticsCalculator {
     }
     return modes
   }
+
+  // find value at certain percentage point
+  percentile(percent) {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    
+    if (percent < 0 || percent > 100) {
+      throw new Error('Percentile has to be between 0 and 100')
+    }
+    
+    let sorted = this.sortData()
+    let index = (percent / 100) * (sorted.length - 1)
+    
+    // if exact index, return that value
+    if (index === Math.floor(index)) {
+      return sorted[index]
+    }
+    
+    // otherwise interpolate between two values
+    let lower = Math.floor(index)
+    let upper = Math.ceil(index)
+    let weight = index - lower
+    return sorted[lower] + weight * (sorted[upper] - sorted[lower])
+  }
 }
