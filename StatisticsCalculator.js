@@ -140,4 +140,44 @@ class StatisticsCalculator {
     }
     return this.max() - this.min()
   }
+
+  // find the most common number(s)
+  mode() {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    
+    // count how many times each number appears
+    let counts = {}
+    for (let i = 0; i < this.numbers.length; i++) {
+      let num = this.numbers[i]
+      if (counts[num]) {
+        counts[num] = counts[num] + 1
+      } else {
+        counts[num] = 1
+      }
+    }
+    
+    // find the highest count
+    let maxCount = 0
+    for (let num in counts) {
+      if (counts[num] > maxCount) {
+        maxCount = counts[num]
+      }
+    }
+    
+    // get all numbers that have the max count
+    let modes = []
+    for (let num in counts) {
+      if (counts[num] === maxCount) {
+        modes.push(Number(num))
+      }
+    }
+    
+    // if all numbers appear same amount, no real mode
+    if (modes.length === this.numbers.length) {
+      return null
+    }
+    return modes
+  }
 }
