@@ -225,4 +225,31 @@ class StatisticsCalculator {
     }
     return this.q3() - this.q1()
   }
+
+  // multiply all numbers together
+  product() {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    
+    let result = 1
+    for (let i = 0; i < this.numbers.length; i++) {
+      result = result * this.numbers[i]
+    }
+    return result
+  }
+
+  // add up all numbers squared (learned this for variance calculation)
+  sumOfSquares() {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    
+    let total = 0
+    for (let i = 0; i < this.numbers.length; i++) {
+      let squared = this.numbers[i] * this.numbers[i]
+      total = total + squared
+    }
+    return total
+  }
 }
