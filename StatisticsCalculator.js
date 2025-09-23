@@ -123,4 +123,21 @@ class StatisticsCalculator {
     let variance = sumSquaredDiffs / this.numbers.length
     return variance
   }
+
+  // standard deviation (square root of variance)
+  stdDev() {
+    let var_result = this.variance()
+    if (var_result === null) {
+      return null
+    }
+    return Math.sqrt(var_result)
+  }
+
+  // difference between max and min
+  range() {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    return this.max() - this.min()
+  }
 }
