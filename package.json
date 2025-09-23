@@ -1,0 +1,33 @@
+{
+  "name": "basic-statistics-calculator",
+  "version": "1.0.0",
+  "description": "A JavaScript statistics calculator module with statistical functions for educational projects and basic data analysis",
+  "main": "StatisticsCalculator.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [
+    "statistics",
+    "calculator",
+    "math",
+    "educational",
+    "data-analysis",
+    "mean",
+    "median",
+    "variance",
+    "standard-deviation"
+  ],
+  "author": "Rickard M <rm222ut@student.lnu.se>",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^30.1.3"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "files": [
+    "StatisticsCalculator.js",
+    "README.md"
+  ]
+}
