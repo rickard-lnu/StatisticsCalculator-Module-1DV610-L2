@@ -252,4 +252,21 @@ class StatisticsCalculator {
     }
     return total
   }
+  
+  // average of absolute values (always positive)
+  meanAbsolute() {
+    if (this.numbers.length === 0) {
+      return null
+    }
+    
+    let sum = 0
+    for (let i = 0; i < this.numbers.length; i++) {
+      // Math.abs makes negative numbers positive
+      let absoluteValue = Math.abs(this.numbers[i])
+      sum = sum + absoluteValue
+    }
+    
+    let average = sum / this.numbers.length
+    return average
+  }
 }
