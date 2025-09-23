@@ -86,6 +86,28 @@ class StatisticsCalculator {
     return biggest
   }
 
+  // helper method to sort data
+  sortData() {
+    // create a copy of the array and sort it
+    let sorted = []
+    for (let i = 0; i < this.numbers.length; i++) {
+      sorted.push(this.numbers[i])
+    }
+    
+    // simple sorting algorithm (bubble sort for consistency with the style)
+    for (let i = 0; i < sorted.length - 1; i++) {
+      for (let j = 0; j < sorted.length - i - 1; j++) {
+        if (sorted[j] > sorted[j + 1]) {
+          let temp = sorted[j]
+          sorted[j] = sorted[j + 1]
+          sorted[j + 1] = temp
+        }
+      }
+    }
+    
+    return sorted
+  }
+
   // find the middle number
   median() {
     if (this.numbers.length === 0) {
