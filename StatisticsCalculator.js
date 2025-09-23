@@ -252,7 +252,7 @@ class StatisticsCalculator {
     }
     return total
   }
-  
+
   // average of absolute values (always positive)
   meanAbsolute() {
     if (this.numbers.length === 0) {
@@ -270,3 +270,4 @@ class StatisticsCalculator {
     return average
   }
 }
+module.exports = StatisticsCalculator
