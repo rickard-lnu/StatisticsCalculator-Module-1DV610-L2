@@ -4,11 +4,18 @@
  * with help from code tabbing
  */
 class StatisticsCalculator {
+  /**
+   * Creates a new StatisticsCalculator instance
+   */
   constructor() {
     this.numbers = []  // store the numbers here
   }
 
-  // Add numbers to calculate with
+  /**
+   * Add numbers to calculate with
+   * @param {number[]} values - Array of numbers to add to the dataset
+   * @throws {Error} When values is not an array or contains invalid numbers
+   */
   addData(values) {
     if (!Array.isArray(values)) {
       throw new Error('Data has to be an array')
@@ -17,7 +24,7 @@ class StatisticsCalculator {
     // check each number is valid
     for (let i = 0; i < values.length; i++) {
       if (typeof values[i] !== 'number' || isNaN(values[i])) {
-        throw new Error('All values must be valid numbers')
+        throw new Error('All values can only be valid numbers')
       }
     }
     
@@ -27,17 +34,25 @@ class StatisticsCalculator {
     }
   }
 
-  // clear all data
+  /**
+   * Clear all data from the calculator
+   */
   clearData() {
     this.numbers = []
   }
 
-  // how many numbers do we have
+  /**
+   * Get the count of numbers in the dataset
+   * @returns {number} Number of values in the dataset
+   */
   count() {
     return this.numbers.length
   }
 
-  // add all numbers together
+  /**
+   * Calculate the sum of all numbers
+   * @returns {number} Sum of all values, or 0 if empty
+   */
   sum() {
     if (this.numbers.length === 0) {
       return 0
@@ -50,7 +65,10 @@ class StatisticsCalculator {
     return total
   }
 
-  // calculate average
+  /**
+   * Calculate the arithmetic mean (average) of all numbers
+   * @returns {number|null} The mean value, or null if no data
+   */
   mean() {
     if (this.numbers.length === 0) {
       return null
@@ -61,7 +79,10 @@ class StatisticsCalculator {
     return average
   }
 
-  // find smallest number
+  /**
+   * Find the minimum value in the dataset
+   * @returns {number|null} Smallest value, or null if no data
+   */
   min() {
     if (this.numbers.length === 0) {
       return null
@@ -76,7 +97,10 @@ class StatisticsCalculator {
     return smallest
   }
 
-  // find biggest number
+  /**
+   * Find the maximum value in the dataset
+   * @returns {number|null} Largest value, or null if no data
+   */
   max() {
     if (this.numbers.length === 0) {
       return null
@@ -91,7 +115,10 @@ class StatisticsCalculator {
     return biggest
   }
 
-  // sort the numbers (but don't change original array)
+  /**
+   * Sort the numbers without modifying the original dataset
+   * @returns {number[]} Sorted copy of the data in ascending order
+   */
   sortData() {
     if (this.numbers.length === 0) {
       return []
@@ -103,7 +130,7 @@ class StatisticsCalculator {
       sortedNumbers.push(this.numbers[i])
     }
     
-    // simple bubble sort (I learned this in class)
+    // simple bubble sort (i learned this in class)
     for (let i = 0; i < sortedNumbers.length; i++) {
       for (let j = 0; j < sortedNumbers.length - 1; j++) {
         if (sortedNumbers[j] > sortedNumbers[j + 1]) {
@@ -118,7 +145,10 @@ class StatisticsCalculator {
     return sortedNumbers
   }
 
-  // find the middle number
+  /**
+   * Calculate the median (middle value) of the dataset
+   * @returns {number|null} Median value, or null if no data
+   */
   median() {
     if (this.numbers.length === 0) {
       return null
@@ -137,7 +167,10 @@ class StatisticsCalculator {
     }
   }
 
-  // calculate variance (spread of data)
+  /**
+   * Calculate the variance (measure of spread) of the dataset
+   * @returns {number|null} Variance value, or null if no data
+   */
   variance() {
     if (this.numbers.length === 0) {
       return null
@@ -156,7 +189,10 @@ class StatisticsCalculator {
     return variance
   }
 
-  // standard deviation (square root of variance)
+  /**
+   * Calculate the standard deviation (square root of variance)
+   * @returns {number|null} Standard deviation, or null if no data
+   */
   stdDev() {
     let var_result = this.variance()
     if (var_result === null) {
@@ -173,7 +209,10 @@ class StatisticsCalculator {
     return this.max() - this.min()
   }
 
-  // find the most common number(s)
+  /**
+   * Find the mode(s) - most frequently occurring value(s)
+   * @returns {number[]|null} Array of mode values, or null if no data or no clear mode
+   */
   mode() {
     if (this.numbers.length === 0) {
       return null
@@ -213,7 +252,12 @@ class StatisticsCalculator {
     return modes
   }
 
-  // find value at certain percentage point
+  /**
+   * Calculate a specific percentile of the dataset
+   * @param {number} percent - Percentile to calculate (0-100)
+   * @returns {number|null} Percentile value, or null if no data
+   * @throws {Error} When percent is not between 0 and 100
+   */
   percentile(percent) {
     if (this.numbers.length === 0) {
       return null
@@ -250,7 +294,10 @@ class StatisticsCalculator {
     return this.percentile(75)
   }
 
-  // interquartile range
+  /**
+   * Calculate the interquartile range (Q3 - Q1)
+   * @returns {number|null} IQR value, or null if no data
+   */
   iqr() {
     if (this.numbers.length === 0) {
       return null
@@ -258,7 +305,10 @@ class StatisticsCalculator {
     return this.q3() - this.q1()
   }
 
-  // multiply all numbers together
+  /**
+   * Calculate the product of all numbers in the dataset
+   * @returns {number|null} Product of all values, or null if no data
+   */
   product() {
     if (this.numbers.length === 0) {
       return null
@@ -271,7 +321,10 @@ class StatisticsCalculator {
     return result
   }
 
-  // add up all numbers squared (learned this for variance calculation)
+  /**
+   * Calculate the sum of squares of all numbers
+   * @returns {number|null} Sum of squared values, or null if no data
+   */
   sumOfSquares() {
     if (this.numbers.length === 0) {
       return null
@@ -285,7 +338,10 @@ class StatisticsCalculator {
     return total
   }
 
-  // average of absolute values (always positive)
+  /**
+   * Calculate the mean of absolute values
+   * @returns {number|null} Mean of absolute values, or null if no data
+   */
   meanAbsolute() {
     if (this.numbers.length === 0) {
       return null
@@ -302,8 +358,15 @@ class StatisticsCalculator {
     return average
   }
 
-  // happiness index - my own weird function that rates how "nice" the numbers are
-  // gives bonus points for round numbers, sequences, etc (just for fun!)
+  /**
+   * Calculate a custom "happiness index" that rates numbers based on various criteria
+   * This is a fun experimental function that gives bonus points for
+   * - Round numbers (divisible by 10)
+   * - Small positive numbers (1-10)
+   * - Perfect squares
+   * - Zero gets neutral score, and negatives lose points
+   * @returns {number|null} Average happiness score per number, or null if theres no data
+   */
   happinessIndex() {
     if (this.numbers.length === 0) {
       return null
