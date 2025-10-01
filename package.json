@@ -1,6 +1,6 @@
 {
   "name": "basic-statistics-calculator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A JavaScript statistics calculator module with essential statistical functions for educational projects and basic data analysis",
   "main": "index.js",
   "scripts": {
