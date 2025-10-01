@@ -1,6 +1,14 @@
 # StatisticsCalculator
 
-A JavaScript statistics calculator module with no external dependencies. This module provides essential statistical functions for descriptive statistics and basic mathematical analysis.
+A JavaScript statistics calculator module with no external dependencies. This module provides basic statistical functions for descriptive statistics and basic mathematical analysis.
+
+## Installation
+
+Install the package through npm:
+
+```bash
+npm install basic-statistics-calculator
+```
 
 ## Features
 
@@ -22,13 +30,13 @@ A JavaScript statistics calculator module with no external dependencies. This mo
 ### Additional Functions
 - **Mathematical Operations**: Product of all values (`product`)
 - **Absolute Values**: Mean of absolute values (`meanAbsolute`)
-- **Fun Functions**: Happiness index (`happinessIndex`) - a creative scoring system for number "quality"
+- **Fun Functions**: Happiness index (`happinessIndex`) - a scoring system for number "quality"
 
 ## Usage Examples
 
 ### Basic Usage
 ```javascript
-const StatisticsCalculator = require('./StatisticsCalculator')
+const StatisticsCalculator = require('basic-statistics-calculator')
 
 const calc = new StatisticsCalculator()
 calc.addData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
@@ -91,7 +99,7 @@ console.log('Happiness Index:', calc.happinessIndex())
 
 ## Error Handling
 
-The calculator includes comprehensive error handling:
+The calculator includes error handling:
 
 ```javascript
 // Input validation
@@ -146,11 +154,11 @@ console.log(calc.sum())            // 0 (empty data)
 - `meanAbsolute()` - Mean of absolute values |x|
 
 ### Special Functions
-- `happinessIndex()` - Creative scoring system rating number "quality" based on mathematical properties
+- `happinessIndex()` - scoring system rating number "quality" based on mathematical properties
 
 ## Testing
 
-The module includes comprehensive tests covering all functionality:
+The module includes tests covering all functionality:
 
 ```bash
 npm install --save-dev jest
@@ -165,24 +173,6 @@ The test suite includes:
 - ✅ Precision handling for floating-point calculations
 - ✅ Special function testing (including happiness index)
 
-## Installation
-
-### Option 1: Direct Copy
-Copy the `StatisticsCalculator.js` file to your project and import:
-
-```javascript
-const StatisticsCalculator = require('./StatisticsCalculator')
-```
-
-### Option 2: As Module
-If using as a module, ensure proper file structure:
-```
-your-project/
-├── StatisticsCalculator.js
-├── StatisticsCalculator.test.js (optional)
-└── your-app.js
-```
-
 ## Requirements
 - Node.js (any modern version)
 - No external dependencies
@@ -192,8 +182,8 @@ your-project/
 MIT
 
 ## Contributing
-Feel free to submit issues and pull requests. Please ensure all tests pass before submitting.
+Feel free to submit issues and pull requests. Please do make sure all tests pass before submitting.
 
 ---
 
-*This calculator provides essential statistical analysis functionality suitable for educational projects, basic data analysis, and mathematical computations.*
+*This calculator provides basic but essential statistical analysis functionality suitable for educational projects, basic data analysis, and mathematical computations.*
