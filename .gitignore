@@ -30,6 +30,7 @@ pids
 
 # IDE files
 .vscode/
+.VSCodeCounter/
 .idea/
 *.swp
 *.swo
