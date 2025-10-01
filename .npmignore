@@ -1,0 +1,17 @@
+# Test files
+*.test.js
+__tests__/
+
+# Development files
+.gitignore
+.vscode/
+.idea/
+
+# Coverage
+coverage/
+
+# Development dependencies
+node_modules/
+
+# App demo file
+app.js
