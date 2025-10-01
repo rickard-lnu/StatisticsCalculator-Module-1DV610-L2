@@ -2,10 +2,10 @@
   "name": "basic-statistics-calculator",
   "version": "1.0.0",
   "description": "A JavaScript statistics calculator module with essential statistical functions for educational projects and basic data analysis",
-  "main": "StatisticsCalculator.js",
+  "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "jest test/",
+    "test:watch": "jest test/ --watch"
   },
   "keywords": [
     "statistics",
@@ -35,7 +35,8 @@
     "node": ">=12.0.0"
   },
   "files": [
-    "StatisticsCalculator.js",
+    "index.js",
+    "src/StatisticsCalculator.js",
     "README.md"
   ]
 }

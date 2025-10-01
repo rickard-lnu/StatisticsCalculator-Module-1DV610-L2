@@ -1,7 +1,7 @@
 // Tests for my statistics calculator
 // Made by Rickard M <rm222ut@student.lnu.se>
 
-const StatisticsCalculator = require('./StatisticsCalculator')
+const StatisticsCalculator = require('../src/StatisticsCalculator')
 
 describe('StatisticsCalculator', () => {
   let calc

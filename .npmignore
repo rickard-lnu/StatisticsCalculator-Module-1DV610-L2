@@ -1,4 +1,5 @@
 # Test files
+test/
 *.test.js
 __tests__/
 
@@ -13,5 +14,6 @@ coverage/
 # Development dependencies
 node_modules/
 
-# App demo file
-app.js
+# Examples and docs (keep only main module and README for npm)
+examples/
+docs/

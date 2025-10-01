@@ -1,4 +1,4 @@
-const StatisticsCalculator = require('./StatisticsCalculator')
+const StatisticsCalculator = require('../src/StatisticsCalculator')
 
 const calc = new StatisticsCalculator()
 calc.addData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
