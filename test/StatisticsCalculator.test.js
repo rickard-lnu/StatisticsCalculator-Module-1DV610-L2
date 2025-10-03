@@ -24,7 +24,7 @@ describe('StatisticsCalculator', () => {
   })
 
   test('should throw error for bad numbers', () => {
-    expect(() => calc.addData([1, 2, 'three', 4])).toThrow('All values must be valid numbers')
+    expect(() => calc.addData([1, 2, 'three', 4])).toThrow('All values can only be valid numbers')
   })
 
   test('should clear all data', () => {
