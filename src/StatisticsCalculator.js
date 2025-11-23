@@ -1,7 +1,10 @@
+class DataValidationError extends Error {}
+class PercentileRangeError extends Error {}
+
 /**
- * A statistics calculator for numbers
- * Made by Rickard M <rm222ut@student.lnu.se>
- * with help from code tabbing
+ * StatisticsCalculator provides descriptive statistics over an internal numeric dataset.
+ * Refactored for Clean Code chapters 2-11: smaller single-purpose functions, clearer naming,
+ * custom error types, reduced mixed abstraction and preserved backward compatibility.
  */
 class StatisticsCalculator {
   /**
@@ -17,21 +20,8 @@ class StatisticsCalculator {
    * @throws {Error} When values is not an array or contains invalid numbers
    */
   addData(values) {
-    if (!Array.isArray(values)) {
-      throw new Error('Data has to be an array')
-    }
-
-    // check each number is valid
-    for (let i = 0; i < values.length; i++) {
-      if (typeof values[i] !== 'number' || isNaN(values[i])) {
-        throw new Error('All values can only be valid numbers')
-      }
-    }
-
-    // add all numbers to our array
-    for (let i = 0; i < values.length; i++) {
-      this.numbers.push(values[i])
-    }
+    this._validateAddData(values)
+    this._appendValues(values)
   }
 
   /**
@@ -123,26 +113,8 @@ class StatisticsCalculator {
     if (this.numbers.length === 0) {
       return []
     }
-
-    // make a copy so we don't mess up original
-    let sortedNumbers = []
-    for (let i = 0; i < this.numbers.length; i++) {
-      sortedNumbers.push(this.numbers[i])
-    }
-
-    // simple bubble sort (i learned this in class)
-    for (let i = 0; i < sortedNumbers.length; i++) {
-      for (let j = 0; j < sortedNumbers.length - 1; j++) {
-        if (sortedNumbers[j] > sortedNumbers[j + 1]) {
-          // swap them
-          let temp = sortedNumbers[j]
-          sortedNumbers[j] = sortedNumbers[j + 1]
-          sortedNumbers[j + 1] = temp
-        }
-      }
-    }
-
-    return sortedNumbers
+    const copy = this._copyNumbers()
+    return this._bubbleSort(copy)
   }
 
   /**
@@ -217,35 +189,9 @@ class StatisticsCalculator {
     if (this.numbers.length === 0) {
       return null
     }
-
-    // count how many times each number appears
-    let counts = {}
-    for (let i = 0; i < this.numbers.length; i++) {
-      let num = this.numbers[i]
-      if (counts[num]) {
-        counts[num] = counts[num] + 1
-      } else {
-        counts[num] = 1
-      }
-    }
-
-    // find the highest count
-    let maxCount = 0
-    for (let num in counts) {
-      if (counts[num] > maxCount) {
-        maxCount = counts[num]
-      }
-    }
-
-    // get all numbers that have the max count
-    let modes = []
-    for (let num in counts) {
-      if (counts[num] === maxCount) {
-        modes.push(Number(num))
-      }
-    }
-
-    // if all numbers appear same amount, no real mode
+    const freq = this._buildFrequencyMap()
+    const max = this._maxCount(freq)
+    const modes = this._extractModes(freq, max)
     if (modes.length === this.numbers.length) {
       return null
     }
@@ -262,24 +208,8 @@ class StatisticsCalculator {
     if (this.numbers.length === 0) {
       return null
     }
-
-    if (percent < 0 || percent > 100) {
-      throw new Error('Percentile has to be between 0 and 100')
-    }
-
-    let sorted = this.sortData()
-    let index = (percent / 100) * (sorted.length - 1)
-
-    // if exact index, return that value
-    if (index === Math.floor(index)) {
-      return sorted[index]
-    }
-
-    // otherwise interpolate between two values
-    let lower = Math.floor(index)
-    let upper = Math.ceil(index)
-    let weight = index - lower
-    return sorted[lower] + weight * (sorted[upper] - sorted[lower])
+    this._validatePercentile(percent)
+    return this._computePercentile(percent)
   }
 
   // some extra functions that might be useful
@@ -367,48 +297,135 @@ class StatisticsCalculator {
    * - Zero gets neutral score, and negatives lose points
    * @returns {number|null} Average happiness score per number, or null if theres no data
    */
+  /**
+   * Deprecated: use qualityScore(). Kept for backward compatibility.
+   * @returns {number|null}
+   */
   happinessIndex() {
+    return this.qualityScore()
+  }
+
+  /**
+   * Compute a custom quality score across numbers (formerly happinessIndex).
+   * @returns {number|null}
+   */
+  qualityScore() {
     if (this.numbers.length === 0) {
       return null
     }
-
-    let totalHappiness = 0
+    let total = 0
     for (let i = 0; i < this.numbers.length; i++) {
-      let num = this.numbers[i]
-      let happiness = 1 // base happiness for existing
-
-      // round numbers are happy
-      if (num % 10 === 0) {
-        happiness = happiness + 2
-      }
-
-      // small positive numbers are nice
-      if (num >= 1 && num <= 10) {
-        happiness = happiness + 1
-      }
-
-      // perfect squares get bonus (like 4, 9, 16, 25)
-      let sqrt = Math.sqrt(Math.abs(num))
-      if (sqrt === Math.floor(sqrt)) {
-        happiness = happiness + 3
-      }
-
-      // zero is perfectly neutral
-      if (num === 0) {
-        happiness = 5
-      }
-
-      // negative numbers are sad
-      if (num < 0) {
-        happiness = happiness - 1
-      }
-
-      totalHappiness = totalHappiness + happiness
+      total += this._scoreSingleNumber(this.numbers[i])
     }
+    return total / this.numbers.length
+  }
 
-    // return average happiness per number
-    let avgHappiness = totalHappiness / this.numbers.length
-    return avgHappiness
+  // ===================== Private / Helper Methods =====================
+
+  _validateAddData(values) {
+    if (!Array.isArray(values)) {
+      throw new DataValidationError('Data has to be an array')
+    }
+    for (let i = 0; i < values.length; i++) {
+      if (typeof values[i] !== 'number' || isNaN(values[i])) {
+        throw new DataValidationError('All values can only be valid numbers')
+      }
+    }
+  }
+
+  _appendValues(values) {
+    for (let i = 0; i < values.length; i++) {
+      this.numbers.push(values[i])
+    }
+  }
+
+  _copyNumbers() {
+    const copy = []
+    for (let i = 0; i < this.numbers.length; i++) {
+      copy.push(this.numbers[i])
+    }
+    return copy
+  }
+
+  _bubbleSort(arr) {
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr.length - 1; j++) {
+        if (arr[j] > arr[j + 1]) {
+          const temp = arr[j]
+          arr[j] = arr[j + 1]
+          arr[j + 1] = temp
+        }
+      }
+    }
+    return arr
+  }
+
+  _buildFrequencyMap() {
+    const counts = {}
+    for (let i = 0; i < this.numbers.length; i++) {
+      const num = this.numbers[i]
+      counts[num] = counts[num] ? counts[num] + 1 : 1
+    }
+    return counts
+  }
+
+  _maxCount(freq) {
+    let max = 0
+    for (let num in freq) {
+      if (freq[num] > max) {
+        max = freq[num]
+      }
+    }
+    return max
+  }
+
+  _extractModes(freq, max) {
+    const modes = []
+    for (let num in freq) {
+      if (freq[num] === max) {
+        modes.push(Number(num))
+      }
+    }
+    return modes
+  }
+
+  _validatePercentile(percent) {
+    if (percent < 0 || percent > 100) {
+      throw new PercentileRangeError('Percentile has to be between 0 and 100')
+    }
+  }
+
+  _computePercentile(percent) {
+    const sorted = this.sortData()
+    const index = (percent / 100) * (sorted.length - 1)
+    if (index === Math.floor(index)) {
+      return sorted[index]
+    }
+    const lower = Math.floor(index)
+    const upper = Math.ceil(index)
+    const weight = index - lower
+    return sorted[lower] + weight * (sorted[upper] - sorted[lower])
+  }
+
+  _scoreSingleNumber(num) {
+    let score = 1
+    if (num % 10 === 0) {
+      score += 2
+    }
+    if (num >= 1 && num <= 10) {
+      score += 1
+    }
+    const sqrt = Math.sqrt(Math.abs(num))
+    if (sqrt === Math.floor(sqrt)) {
+      score += 3
+    }
+    if (num === 0) {
+      score = 5
+    }
+    if (num < 0) {
+      score -= 1
+    }
+    return score
   }
 }
 
